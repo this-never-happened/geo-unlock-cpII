@@ -197,12 +197,6 @@
     animation: drift 16s ease-in-out infinite, bloomPulse 2.4s ease-out;
     filter: saturate(1.18) brightness(1.08);
   }
-    40%  { opacity: 0.7; transform: translate(-50%, -50%) scale(1.2); }
-    100% { opacity: 0; transform: translate(-50%, -50%) scale(2.2); }
-  }
-    50%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.4); }
-  }
 
   @keyframes bloomPulse {
     0%   { filter: saturate(0.6) brightness(0.55); }
@@ -598,28 +592,34 @@ const CONFIG = {
   // Default locked title — what shows before unlock
   lockedTitle: 'Cross Pollination II',
 
-  // Track <-> city/zone map. PLACEHOLDERS — plug in real coords + spotify ids.
+  // Track ↔ garden/zone map — source of truth: Notion "cross pollination II [geo unlocking]".
+  // Each contributor unlocks at a botanical garden / park tied to them.
+  // Coords + stream IDs synced from Notion 2026-06-02. tbc rows go live the moment lat/lng are set.
   tracks: [
-    { id: 1,  title: 'Disappear',                 collaborators: 'Sultan + Shepard, sadHAPPY', city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 2,  title: 'Penguin Parade',            collaborators: 'Robby East',                 city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 3,  title: 'Sol',                       collaborators: 'Cornelius SA, Alan Green',   city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 0,  title: 'World Is Mine',             collaborators: 'Kasbo, BJOERN',              city: 'London',          lat: 51.5074, lng: -0.1278, radius: 15000, hotspot: { x: 0.34, y: 0.24 }, embed: '<iframe style="border-radius:8px;" src="https://untitled.stream/embed/MOhK7m3fRDEL?theme=dark&bg=0d0a14&color=e55b4f" width="100%" height="180" allowFullScreen="" allow="picture-in-picture" frameborder="0" loading="eager"></iframe>' },
-    { id: 4,  title: 'World Is Mine',             collaborators: 'Kasbo, BJOERN',              city: 'Denver',          lat: 39.7002, lng: -104.9687, radius: 15000, hotspot: { x: 0.34, y: 0.24 }, embed: '<iframe style="border-radius:8px;" src="https://untitled.stream/embed/MOhK7m3fRDEL?theme=dark&bg=0d0a14&color=e55b4f" width="100%" height="180" allowFullScreen="" allow="picture-in-picture" frameborder="0" loading="eager"></iframe>' },
-    { id: 5,  title: 'World Is Mine (Reprise)',   collaborators: 'Kasbo, BJOERN',              city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 6,  title: 'Maglia Rosa',               collaborators: 'Grigoré',                    city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 7,  title: 'The Doubt',                 collaborators: 'Gui Boratto, Jyll',          city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 8,  title: 'Something In The Air',      collaborators: 'Rae Morris',                 city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 9,  title: 'Candy',                     collaborators: 'Quentin Quivera',            city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 10, title: 'Empty Theatre, Pretty Picture', collaborators: 'Davey Havok',            city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 11, title: 'Adelie',                    collaborators: 'MYRNE',                      city: 'Vitabergsparken', lat: 59.310738, lng: 18.088962, radius: 400, embed: '' },
-    { id: 12, title: 'Pulsar',                    collaborators: 'Teho',                       city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 13, title: 'Purple Pepper',             collaborators: 'PARIS',                      city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
-    { id: 14, title: 'Tripwires',                 collaborators: 'Massane, barking continues', city: 'PLACEHOLDER',     lat: 0, lng: 0, radius: 400, embed: '' },
+    { id: 'denver',      title: 'Cross Pollination II', collaborators: '',               city: 'Washington Park · Denver',          lat: 39.7002,   lng: -104.9687, radius: 1000, stream: '9jMleBm7H7MS' },
+    { id: 'capetown',    title: 'Sol',                  collaborators: 'Alan Green',      city: 'Kirstenbosch · Cape Town',          lat: -33.98981, lng: 18.43200,  radius: 1000, stream: 'F0f9DHrdNRYu' },
+    { id: 'montpellier', title: 'Pulsar',               collaborators: 'Teho',            city: 'Promenade du Peyrou · Montpellier', lat: 43.61194,  lng: 3.87722,   radius: 1000, stream: 'gmiLvYxxEQsj' },
+    { id: 'pretoria',    title: 'Sol',                  collaborators: 'Cornelius SA',    city: 'Pretoria Botanical Gardens',        lat: -25.73839, lng: 28.27217,  radius: 1000, stream: 'F0f9DHrdNRYu' },
+    { id: 'brussels',    title: 'Candy',                collaborators: 'Quentin Quivera', city: 'Le Botanique · Brussels',           lat: 50.8547,   lng: 4.3653,    radius: 1000, stream: 'uZnH7jdQlIYL' },
+
+    // ── Awaiting locations — set lat/lng to bring live ──────────────────────────────────
+    { id: 'paris',   title: 'Purple Pepper',        collaborators: 'PARIS',       city: 'TBC',           lat: null, lng: null, radius: 1000, stream: 'BzQQjDcWj3AP' },
+    { id: 'jyll',    title: 'The Doubt',            collaborators: 'Jyll',        city: 'TBC',           lat: null, lng: null, radius: 1000, stream: 'Zmq0OgKcIi50' },
+    { id: 'boratto', title: 'The Doubt',            collaborators: 'Gui Boratto', city: 'TBC',           lat: null, lng: null, radius: 1000, stream: 'Zmq0OgKcIi50' },
+    { id: 'grigore', title: 'Maglia Rosa',          collaborators: 'Grigoré',     city: 'TBC (Denver?)', lat: null, lng: null, radius: 1000, stream: 'IzA5AG5gxhc5' },
+    { id: 'rae',     title: 'Something In The Air', collaborators: 'Rae Morris',  city: 'TBC',           lat: null, lng: null, radius: 1000, stream: '0MpQyhWSQ606' },
   ],
 
-  // Default embed used for any track without its own embed (placeholder)
-  defaultEmbed: '<iframe style="border-radius: 8px; color-scheme: dark;" src="https://untitled.stream/embed/MOhK7m3fRDEL?theme=dark&bg=0d0a14&color=e55b4f" width="100%" height="180" allowFullScreen="" allow="picture-in-picture" frameborder="0" loading="eager"></iframe>',
+  // Untitled.stream embed builder — uniform dark styling across every track
+  streamBase: 'https://untitled.stream/embed/',
 };
+
+function buildEmbed(streamId){
+  if (!streamId) return '';
+  return '<iframe style="border-radius:8px;" src="' + CONFIG.streamBase + streamId +
+         '?theme=dark&bg=0d0a14&color=e55b4f" width="100%" height="180" allowFullScreen ' +
+         'allow="picture-in-picture" frameborder="0" loading="eager"></iframe>';
+}
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Date check ───────────────────────────────────────────────────────────────
@@ -638,7 +638,7 @@ if (new URLSearchParams(window.location.search).has('dev')) {
   document.getElementById('btnDev').style.display = 'block';
 }
 
-// AUTO-UNLOCK for preview — picks the hardwired World Is Mine track
+// AUTO-UNLOCK for preview — picks the first live garden
 const _isPreview = new URLSearchParams(window.location.search).has('dev')
                || window.location.hostname === 'localhost'
                || window.location.hostname === ''
@@ -646,8 +646,12 @@ const _isPreview = new URLSearchParams(window.location.search).has('dev')
                || window.self !== window.top;
 window.addEventListener('load', () => {
   if (!_isPreview) return;
+  // ?preview=<id> forces a specific garden (e.g. ?preview=capetown). Otherwise first live garden.
+  const want = new URLSearchParams(window.location.search).get('preview');
   setTimeout(() => {
-    const t = CONFIG.tracks.find(x => x.title === 'World Is Mine') || CONFIG.tracks[0];
+    const t = (want && CONFIG.tracks.find(x => x.id === want))
+           || CONFIG.tracks.find(x => x.lat != null)
+           || CONFIG.tracks[0];
     unlockTrack(t);
   }, 600);
 });
@@ -823,15 +827,12 @@ function unlockTrack(track) {
   }, 600);
 
   // Update artist line to the collaborator credit
-  document.getElementById('artistLine').textContent = 'Lane 8, ' + track.collaborators;
+  document.getElementById('artistLine').textContent =
+    track.collaborators ? 'Lane 8, ' + track.collaborators : 'Lane 8';
 
   // Inject player
   const playerWrap = document.getElementById('playerWrap');
-  playerWrap.innerHTML = (track.embed || CONFIG.defaultEmbed);
-
-  // Bud grid
-  const yc = document.getElementById('yourCity');
-  if (yc && track.city) yc.textContent = track.city;
+  playerWrap.innerHTML = buildEmbed(track.stream);
 
   // Watch
   startWatching();
@@ -845,8 +846,8 @@ function unlockTrack(track) {
 }
 
 function devUnlock() {
-  // Pick a random non-placeholder track for preview, fallback to track #4
-  const t = CONFIG.tracks.find(x => x.title === 'World Is Mine') || CONFIG.tracks[0];
+  // Preview the first live garden (one with real coords), fallback to first track
+  const t = CONFIG.tracks.find(x => x.lat != null) || CONFIG.tracks[0];
   unlockTrack(t);
 }
 
@@ -866,7 +867,7 @@ function checkLocation() {
       btn.classList.remove('scanning');
       const { latitude: lat, longitude: lng } = pos.coords;
       for (const t of CONFIG.tracks) {
-        if (!t.lat) continue;
+        if (t.lat == null) continue;
         const dist = haversine(lat, lng, t.lat, t.lng);
         if (dist <= t.radius) {
           unlockTrack(t);
