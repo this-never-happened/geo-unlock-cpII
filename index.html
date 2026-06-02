@@ -870,13 +870,10 @@ function unlockTrack(track) {
   const playerWrap = document.getElementById('playerWrap');
   playerWrap.innerHTML = buildEmbed(track.stream, track.album);
 
-  // Watch
+  // Keep watching their position — access is revoked only if they physically
+  // leave the zone. Locking the screen / pocketing the phone keeps playback
+  // going (people listen with the screen off), so we do NOT revoke on background.
   startWatching();
-  if (!_isPreview) {
-    document.addEventListener('visibilitychange', () => {
-      if (_isUnlocked && document.hidden) revoke();
-    }, { once: true });
-  }
 
   setStatus('');
 }
