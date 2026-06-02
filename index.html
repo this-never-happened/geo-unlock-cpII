@@ -542,7 +542,7 @@
 <!-- ========== UNLOCKED VIEW ========== -->
 <div class="view hidden" id="unlockedView">
   <div class="header-row">
-    <span>Lane 8 + Friends · Cross Pollination II</span>
+    <span id="unlockedHeader">Lane 8 + Friends · Cross Pollination II</span>
   </div>
 
   <div class="artwork-wrap" id="artworkWrap">
@@ -554,7 +554,6 @@
     <div class="title-stage">
       <div class="title unlocked" id="title"></div>
     </div>
-    <div class="artist-line" id="artistLine">Lane 8 + Friends</div>
   </div>
 
   <div class="player-wrap visible" id="playerWrap"></div>
@@ -762,7 +761,7 @@ function revoke() {
   document.getElementById('lockedView').classList.remove('hidden');
 
   document.getElementById('playerWrap').innerHTML = '';
-  document.getElementById('artistLine').textContent = CONFIG.artist;
+  document.getElementById('unlockedHeader').textContent = 'Lane 8 + Friends · Cross Pollination II';
 
   renderLockedBuds();
 
@@ -830,8 +829,8 @@ function unlockTrack(track) {
     document.getElementById('mapOverlay').classList.add('visible');
   }, 600);
 
-  // Update artist line to the collaborator credit
-  document.getElementById('artistLine').textContent =
+  // Top header becomes the specific artist credit (local artist first)
+  document.getElementById('unlockedHeader').textContent =
     track.collaborators ? 'Lane 8, ' + track.collaborators : 'Lane 8';
 
   // Inject player
