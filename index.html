@@ -863,34 +863,50 @@ function checkLocation() {
   btn.textContent = 'Locating…';
   setStatus('Finding you…', true);
 
-  navigator.geolocation.getCurrentPosition(
-    (pos) => {
-      btn.classList.remove('scanning');
-      const { latitude: lat, longitude: lng } = pos.coords;
-      for (const t of CONFIG.tracks) {
-        if (t.lat == null) continue;
-        const dist = haversine(lat, lng, t.lat, t.lng);
-        if (dist <= t.radius) {
-          unlockTrack(t);
-          return;
-        }
+  const onSuccess = (pos) => {
+    btn.classList.remove('scanning');
+    const { latitude: lat, longitude: lng } = pos.coords;
+    for (const t of CONFIG.tracks) {
+      if (t.lat == null) continue;
+      const dist = haversine(lat, lng, t.lat, t.lng);
+      if (dist <= t.radius) {
+        unlockTrack(t);
+        return;
       }
-      btn.disabled = false;
-      btn.textContent = 'Find my location';
-      setStatus('Not there yet. Find the right place.');
-    },
+    }
+    btn.disabled = false;
+    btn.textContent = 'Find my location';
+    setStatus('Not there yet. Find the right place.');
+  };
+
+  const onError = (err) => {
+    btn.classList.remove('scanning');
+    btn.disabled = false;
+    btn.textContent = 'Find my location';
+    const msgs = {
+      1: 'Location access denied. Enable it in your browser settings.',
+      2: 'Position unavailable. Move somewhere with a clearer signal.',
+      3: 'Couldn’t pin you down in time. Try again — ideally outdoors.',
+    };
+    setStatus(msgs[err.code] || 'Something went wrong. Try again.');
+  };
+
+  // Stage 1: fast, high-accuracy (GPS). If it times out or is unavailable,
+  // fall back to low-accuracy (Wi-Fi/IP) with a longer window before erroring.
+  navigator.geolocation.getCurrentPosition(
+    onSuccess,
     (err) => {
-      btn.classList.remove('scanning');
-      btn.disabled = false;
-      btn.textContent = 'Find my location';
-      const msgs = {
-        1: 'Location access denied. Enable it in your browser settings.',
-        2: 'Position unavailable. Try again outside.',
-        3: 'Request timed out. Try again.',
-      };
-      setStatus(msgs[err.code] || 'Something went wrong. Try again.');
+      if (err.code === 3 || err.code === 2) {
+        setStatus('Still finding you…', true);
+        navigator.geolocation.getCurrentPosition(
+          onSuccess, onError,
+          { enableHighAccuracy: false, timeout: 25000, maximumAge: 60000 }
+        );
+      } else {
+        onError(err);
+      }
     },
-    { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
   );
 }
 </script>
