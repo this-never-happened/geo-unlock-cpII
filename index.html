@@ -604,7 +604,8 @@ const CONFIG = {
   // Coords + stream IDs synced from Notion 2026-06-02. tbc rows go live the moment lat/lng are set.
   tracks: [
     // Whole album plays as one continuous compact player (original feel). Set album:true to show the full scrollable tracklist instead.
-    { id: 'denver',      title: 'Cross Pollination II', collaborators: '',               city: 'Washington Park · Denver',          lat: 39.7002,   lng: -104.9687, radius: 1000, stream: '9jMleBm7H7MS' },
+    // credit override: no single artist for the whole-album zone, so credit "Lane 8 + Friends" (the tracklist isn't visible, so a per-track name would mislead).
+    { id: 'denver',      title: 'Cross Pollination II', collaborators: '', credit: 'Lane 8 + Friends', city: 'Washington Park · Denver', lat: 39.7002, lng: -104.9687, radius: 1000, stream: '9jMleBm7H7MS' },
     { id: 'capetown',    title: 'Sol',                  collaborators: 'Alan Green, Cornelius SA', city: 'Kirstenbosch · Cape Town',     lat: -33.98981, lng: 18.43200,  radius: 1000, stream: 'F0f9DHrdNRYu' },
     { id: 'montpellier', title: 'Pulsar',               collaborators: 'Teho',            city: 'Promenade du Peyrou · Montpellier', lat: 43.61194,  lng: 3.87722,   radius: 1000, stream: 'gmiLvYxxEQsj' },
     { id: 'pretoria',    title: 'Sol',                  collaborators: 'Cornelius SA, Alan Green', city: 'Pretoria Botanical Gardens',   lat: -25.73839, lng: 28.27217,  radius: 1000, stream: 'F0f9DHrdNRYu' },
@@ -850,8 +851,8 @@ function unlockTrack(track) {
     document.getElementById('mapOverlay').classList.add('visible');
   }, 600);
 
-  // Top header becomes the specific artist credit (local artist first)
-  document.getElementById('unlockedHeader').textContent = formatCredit(track.collaborators);
+  // Top header becomes the specific artist credit (local artist first; whole-album uses its credit override)
+  document.getElementById('unlockedHeader').textContent = track.credit || formatCredit(track.collaborators);
 
   // Inject player
   const playerWrap = document.getElementById('playerWrap');
