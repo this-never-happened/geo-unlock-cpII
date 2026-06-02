@@ -642,6 +642,7 @@ if (new URLSearchParams(window.location.search).has('dev')) {
 // AUTO-UNLOCK for preview — picks the first live garden
 const _isPreview = new URLSearchParams(window.location.search).has('dev')
                || window.location.hostname === 'localhost'
+               || window.location.hostname === '127.0.0.1'
                || window.location.hostname === ''
                || window.location.protocol === 'file:'
                || window.self !== window.top;
@@ -854,6 +855,16 @@ function devUnlock() {
 
 function checkLocation() {
   const btn = document.getElementById('btnLocate');
+
+  // Testing override: ?at=LAT,LNG simulates standing at those coords (desktop has no GPS).
+  // e.g. ?at=39.7002,-104.9687 → Denver. Runs the real geofence match + unlock.
+  const at = new URLSearchParams(window.location.search).get('at');
+  if (at && /^-?\d+(\.\d+)?,-?\d+(\.\d+)?$/.test(at.trim())) {
+    const [flat, flng] = at.trim().split(',').map(Number);
+    onLocationFix(flat, flng);
+    return;
+  }
+
   if (!navigator.geolocation) {
     setStatus('Geolocation not supported on this device.');
     return;
@@ -863,9 +874,9 @@ function checkLocation() {
   btn.textContent = 'Locating…';
   setStatus('Finding you…', true);
 
-  const onSuccess = (pos) => {
+  // Shared matcher — hoisted so the ?at= override (above) can call it too.
+  function onLocationFix(lat, lng) {
     btn.classList.remove('scanning');
-    const { latitude: lat, longitude: lng } = pos.coords;
     for (const t of CONFIG.tracks) {
       if (t.lat == null) continue;
       const dist = haversine(lat, lng, t.lat, t.lng);
@@ -877,7 +888,9 @@ function checkLocation() {
     btn.disabled = false;
     btn.textContent = 'Find my location';
     setStatus('Not there yet. Find the right place.');
-  };
+  }
+
+  const onSuccess = (pos) => onLocationFix(pos.coords.latitude, pos.coords.longitude);
 
   const onError = (err) => {
     btn.classList.remove('scanning');
