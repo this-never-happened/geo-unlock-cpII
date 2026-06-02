@@ -633,6 +633,16 @@ function buildEmbed(streamId, tall){
          'sandbox="allow-scripts allow-same-origin" ' +
          'allow="picture-in-picture" frameborder="0" loading="eager"></iframe>';
 }
+
+// Build a grammatically correct credit: "Lane 8", "Lane 8 & Teho",
+// "Lane 8, Cornelius SA & Alan Green", etc. (comma list, & before the last).
+function formatCredit(collaborators) {
+  var names = ['Lane 8'].concat(
+    collaborators ? collaborators.split(',').map(function(s){ return s.trim(); }).filter(Boolean) : []
+  );
+  if (names.length <= 1) return names[0];
+  return names.slice(0, -1).join(', ') + ' & ' + names[names.length - 1];
+}
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Date check ───────────────────────────────────────────────────────────────
@@ -841,8 +851,7 @@ function unlockTrack(track) {
   }, 600);
 
   // Top header becomes the specific artist credit (local artist first)
-  document.getElementById('unlockedHeader').textContent =
-    track.collaborators ? 'Lane 8, ' + track.collaborators : 'Lane 8';
+  document.getElementById('unlockedHeader').textContent = formatCredit(track.collaborators);
 
   // Inject player
   const playerWrap = document.getElementById('playerWrap');
