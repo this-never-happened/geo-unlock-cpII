@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="dark">
 <title>Cross Pollination II — Lane 8</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -597,15 +598,15 @@ const CONFIG = {
   tracks: [
     // Whole album plays as one continuous compact player (original feel). Set album:true to show the full scrollable tracklist instead.
     { id: 'denver',      title: 'Cross Pollination II', collaborators: '',               city: 'Washington Park · Denver',          lat: 39.7002,   lng: -104.9687, radius: 1000, stream: '9jMleBm7H7MS' },
-    { id: 'capetown',    title: 'Sol',                  collaborators: 'Alan Green',      city: 'Kirstenbosch · Cape Town',          lat: -33.98981, lng: 18.43200,  radius: 1000, stream: 'F0f9DHrdNRYu' },
+    { id: 'capetown',    title: 'Sol',                  collaborators: 'Alan Green, Cornelius SA', city: 'Kirstenbosch · Cape Town',     lat: -33.98981, lng: 18.43200,  radius: 1000, stream: 'F0f9DHrdNRYu' },
     { id: 'montpellier', title: 'Pulsar',               collaborators: 'Teho',            city: 'Promenade du Peyrou · Montpellier', lat: 43.61194,  lng: 3.87722,   radius: 1000, stream: 'gmiLvYxxEQsj' },
-    { id: 'pretoria',    title: 'Sol',                  collaborators: 'Cornelius SA',    city: 'Pretoria Botanical Gardens',        lat: -25.73839, lng: 28.27217,  radius: 1000, stream: 'F0f9DHrdNRYu' },
+    { id: 'pretoria',    title: 'Sol',                  collaborators: 'Cornelius SA, Alan Green', city: 'Pretoria Botanical Gardens',   lat: -25.73839, lng: 28.27217,  radius: 1000, stream: 'F0f9DHrdNRYu' },
     { id: 'brussels',    title: 'Candy',                collaborators: 'Quentin Quivera', city: 'Le Botanique · Brussels',           lat: 50.8547,   lng: 4.3653,    radius: 1000, stream: 'uZnH7jdQlIYL' },
 
     // ── Awaiting locations — set lat/lng to bring live ──────────────────────────────────
     { id: 'paris',   title: 'Purple Pepper',        collaborators: 'PARIS',       city: 'TBC',           lat: null, lng: null, radius: 1000, stream: 'BzQQjDcWj3AP' },
-    { id: 'jyll',    title: 'The Doubt',            collaborators: 'Jyll',        city: 'TBC',           lat: null, lng: null, radius: 1000, stream: 'Zmq0OgKcIi50' },
-    { id: 'boratto', title: 'The Doubt',            collaborators: 'Gui Boratto', city: 'TBC',           lat: null, lng: null, radius: 1000, stream: 'Zmq0OgKcIi50' },
+    { id: 'jyll',    title: 'The Doubt',            collaborators: 'Jyll, Gui Boratto', city: 'TBC',     lat: null, lng: null, radius: 1000, stream: 'Zmq0OgKcIi50' },
+    { id: 'boratto', title: 'The Doubt',            collaborators: 'Gui Boratto, Jyll', city: 'TBC',     lat: null, lng: null, radius: 1000, stream: 'Zmq0OgKcIi50' },
     { id: 'grigore', title: 'Maglia Rosa',          collaborators: 'Grigoré',     city: 'TBC (Denver?)', lat: null, lng: null, radius: 1000, stream: 'IzA5AG5gxhc5' },
     { id: 'rae',     title: 'Something In The Air', collaborators: 'Rae Morris',  city: 'TBC',           lat: null, lng: null, radius: 1000, stream: '0MpQyhWSQ606' },
   ],
@@ -618,7 +619,7 @@ function buildEmbed(streamId, tall){
   if (!streamId) return '';
   // tall = whole-album projects show their scrollable tracklist; singles stay compact
   var height = tall ? 344 : 180;
-  return '<iframe style="border-radius:8px;" src="' + CONFIG.streamBase + streamId +
+  return '<iframe style="border-radius:8px; color-scheme: dark;" src="' + CONFIG.streamBase + streamId +
          '?theme=dark&bg=0d0a14&color=e55b4f" width="100%" height="' + height + '" allowFullScreen ' +
          'allow="picture-in-picture" frameborder="0" loading="eager"></iframe>';
 }
