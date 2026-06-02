@@ -618,8 +618,11 @@ function buildEmbed(streamId, tall){
   if (!streamId) return '';
   // tall = whole-album projects show their scrollable tracklist; singles stay compact
   var height = tall ? 344 : 180;
+  // sandbox: allow the player's own scripts/streaming, but NO popups or top-nav,
+  // so the embed's title/logo links can't navigate off to untitled.stream's public page.
   return '<iframe style="border-radius:8px; color-scheme: dark;" src="' + CONFIG.streamBase + streamId +
          '?theme=dark&bg=0d0a14&color=e55b4f" width="100%" height="' + height + '" allowFullScreen ' +
+         'sandbox="allow-scripts allow-same-origin" ' +
          'allow="picture-in-picture" frameborder="0" loading="eager"></iframe>';
 }
 // ─────────────────────────────────────────────────────────────────────────────
