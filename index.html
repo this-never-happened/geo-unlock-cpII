@@ -342,7 +342,6 @@
     border: none;
     display: block;
     box-shadow: 0 0 0 1px rgba(164,214,201,0.18), 0 8px 28px rgba(0,0,0,0.55);
-    filter: invert(1) hue-rotate(180deg);
   }
 
   /* Pre-save */
@@ -596,7 +595,7 @@ const CONFIG = {
   // Each contributor unlocks at a botanical garden / park tied to them.
   // Coords + stream IDs synced from Notion 2026-06-02. tbc rows go live the moment lat/lng are set.
   tracks: [
-    { id: 'denver',      title: 'Cross Pollination II', collaborators: '',               city: 'Washington Park · Denver',          lat: 39.7002,   lng: -104.9687, radius: 1000, stream: '9jMleBm7H7MS' },
+    { id: 'denver',      title: 'Cross Pollination II', collaborators: '',               city: 'Washington Park · Denver',          lat: 39.7002,   lng: -104.9687, radius: 1000, stream: '9jMleBm7H7MS', album: true },
     { id: 'capetown',    title: 'Sol',                  collaborators: 'Alan Green',      city: 'Kirstenbosch · Cape Town',          lat: -33.98981, lng: 18.43200,  radius: 1000, stream: 'F0f9DHrdNRYu' },
     { id: 'montpellier', title: 'Pulsar',               collaborators: 'Teho',            city: 'Promenade du Peyrou · Montpellier', lat: 43.61194,  lng: 3.87722,   radius: 1000, stream: 'gmiLvYxxEQsj' },
     { id: 'pretoria',    title: 'Sol',                  collaborators: 'Cornelius SA',    city: 'Pretoria Botanical Gardens',        lat: -25.73839, lng: 28.27217,  radius: 1000, stream: 'F0f9DHrdNRYu' },
@@ -614,10 +613,12 @@ const CONFIG = {
   streamBase: 'https://untitled.stream/embed/',
 };
 
-function buildEmbed(streamId){
+function buildEmbed(streamId, tall){
   if (!streamId) return '';
+  // tall = whole-album projects show their scrollable tracklist; singles stay compact
+  var height = tall ? 344 : 180;
   return '<iframe style="border-radius:8px;" src="' + CONFIG.streamBase + streamId +
-         '?theme=dark&bg=0d0a14&color=e55b4f" width="100%" height="180" allowFullScreen ' +
+         '?theme=dark&bg=0d0a14&color=e55b4f" width="100%" height="' + height + '" allowFullScreen ' +
          'allow="picture-in-picture" frameborder="0" loading="eager"></iframe>';
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -832,7 +833,7 @@ function unlockTrack(track) {
 
   // Inject player
   const playerWrap = document.getElementById('playerWrap');
-  playerWrap.innerHTML = buildEmbed(track.stream);
+  playerWrap.innerHTML = buildEmbed(track.stream, track.album);
 
   // Watch
   startWatching();
