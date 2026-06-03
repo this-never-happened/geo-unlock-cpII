@@ -620,7 +620,8 @@ const CONFIG = {
   tracks: [
     // Whole album plays as one continuous compact player (original feel). Set album:true to show the full scrollable tracklist instead.
     // credit override: no single artist for the whole-album zone, so credit "Lane 8 + Friends" (the tracklist isn't visible, so a per-track name would mislead).
-    { id: 'denver',      title: 'Cross Pollination II', collaborators: '', credit: 'Lane 8 + Friends', city: 'Washington Park · Denver', lat: 39.7002, lng: -104.9687, radius: 1000, stream: '9jMleBm7H7MS' },
+    // ⚠️ TEMP: radius opened to 20km (whole-city) so Denver-based colleagues can test from anywhere. Revert to 1000 (Washington Park only) for launch.
+    { id: 'denver',      title: 'Cross Pollination II', collaborators: '', credit: 'Lane 8 + Friends', city: 'Washington Park · Denver', lat: 39.7002, lng: -104.9687, radius: 20000, stream: '9jMleBm7H7MS' },
     { id: 'capetown',    title: 'Sol',                  collaborators: 'Alan Green, Cornelius SA', city: 'Kirstenbosch · Cape Town',     lat: -33.98981, lng: 18.43200,  radius: 1000, stream: 'F0f9DHrdNRYu' },
     { id: 'montpellier', title: 'Pulsar',               collaborators: 'Teho',            city: 'Promenade du Peyrou · Montpellier', lat: 43.61194,  lng: 3.87722,   radius: 1000, stream: 'gmiLvYxxEQsj' },
     { id: 'pretoria',    title: 'Sol',                  collaborators: 'Cornelius SA, Alan Green', city: 'Pretoria Botanical Gardens',   lat: -25.73839, lng: 28.27217,  radius: 1000, stream: 'F0f9DHrdNRYu' },
