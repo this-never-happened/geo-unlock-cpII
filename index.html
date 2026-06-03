@@ -27,6 +27,9 @@
     --hairline:  rgba(242,234,184,0.18);
   }
 
+  html {
+    color-scheme: dark;   /* hint embedded players (untitled.stream) to render dark */
+  }
   html, body {
     min-height: 100%;
     width: 100%;
@@ -681,6 +684,8 @@ const _isPreview = new URLSearchParams(window.location.search).has('dev')
                || window.location.hostname === ''
                || window.location.protocol === 'file:'
                || window.self !== window.top;
+// ?at= is a spoof/test override — don't let real GPS revoke a spoofed unlock
+const _hasSpoof = new URLSearchParams(window.location.search).has('at');
 window.addEventListener('load', () => {
   if (!_isPreview) return;
   // ?preview=<id> forces a specific garden (e.g. ?preview=capetown). Otherwise first live garden.
@@ -873,7 +878,8 @@ function unlockTrack(track) {
   // Keep watching their position — access is revoked only if they physically
   // leave the zone. Locking the screen / pocketing the phone keeps playback
   // going (people listen with the screen off), so we do NOT revoke on background.
-  startWatching();
+  // Skip the watch for preview/spoof so a ?at= test stays unlocked.
+  if (!_isPreview && !_hasSpoof) startWatching();
 
   setStatus('');
 }
