@@ -541,7 +541,7 @@
 <!-- ========== LOCKED VIEW ========== -->
 <div class="view" id="lockedView">
   <div class="header-row">
-    <span>Lane 8 + Friends · Cross Pollination II</span>
+    <span>Lane 8 & Friends · Cross Pollination II</span>
   </div>
 
   <div class="artwork-wrap" id="lockedArtworkWrap">
@@ -565,7 +565,7 @@
 <!-- ========== UNLOCKED VIEW ========== -->
 <div class="view hidden" id="unlockedView">
   <div class="header-row">
-    <span id="unlockedHeader">Lane 8 + Friends · Cross Pollination II</span>
+    <span id="unlockedHeader">Lane 8 & Friends · Cross Pollination II</span>
   </div>
 
   <div class="artwork-wrap" id="artworkWrap">
@@ -608,7 +608,7 @@ const CONFIG = {
   // Force-bypass the date check while developing
   bypassDateCheck: true,
 
-  artist: 'Lane 8 + Friends',
+  artist: 'Lane 8 & Friends',
   albumName: 'Cross Pollination II',
 
   // Default locked title — what shows before unlock
@@ -619,9 +619,9 @@ const CONFIG = {
   // Coords + stream IDs synced from Notion 2026-06-02. tbc rows go live the moment lat/lng are set.
   tracks: [
     // Whole album plays as one continuous compact player (original feel). Set album:true to show the full scrollable tracklist instead.
-    // credit override: no single artist for the whole-album zone, so credit "Lane 8 + Friends" (the tracklist isn't visible, so a per-track name would mislead).
+    // credit override: no single artist for the whole-album zone, so credit "Lane 8 & Friends" (the tracklist isn't visible, so a per-track name would mislead).
     // Lane 8 — City Park, Denver (LOCKED launch zone, 1km). Source: Notion "City Park [Whole Album]".
-    { id: 'denver',      title: 'Cross Pollination II', collaborators: '', credit: 'Lane 8 + Friends', city: 'City Park · Denver', lat: 39.7475, lng: -104.9515, radius: 1000, stream: '9jMleBm7H7MS' },
+    { id: 'denver',      title: 'Cross Pollination II', collaborators: '', credit: 'Lane 8 & Friends', city: 'City Park · Denver', lat: 39.7475, lng: -104.9515, radius: 1000, stream: '9jMleBm7H7MS' },
     { id: 'capetown',    title: 'Sol',                  collaborators: 'Alan Green, Cornelius SA', city: 'Kirstenbosch · Cape Town',     lat: -33.98981, lng: 18.43200,  radius: 1000, stream: 'F0f9DHrdNRYu' },
     { id: 'montpellier', title: 'Pulsar',               collaborators: 'Teho',            city: 'Promenade du Peyrou · Montpellier', lat: 43.61194,  lng: 3.87722,   radius: 1000, stream: 'gmiLvYxxEQsj' },
     { id: 'pretoria',    title: 'Sol',                  collaborators: 'Cornelius SA, Alan Green', city: 'Pretoria Botanical Gardens',   lat: -25.73839, lng: 28.27217,  radius: 1000, stream: 'F0f9DHrdNRYu' },
@@ -801,7 +801,7 @@ function revoke() {
   document.getElementById('lockedView').classList.remove('hidden');
 
   document.getElementById('playerWrap').innerHTML = '';
-  document.getElementById('unlockedHeader').textContent = 'Lane 8 + Friends · Cross Pollination II';
+  document.getElementById('unlockedHeader').textContent = 'Lane 8 & Friends · Cross Pollination II';
 
   renderLockedBuds();
 
